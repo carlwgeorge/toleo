@@ -1,4 +1,5 @@
-from .software import GenericSoftware, PyPISoftware, PECLSoftware, GitHubSoftware
+from .software import GenericSoftware, PyPISoftware, PECLSoftware, \
+    GitHubSoftware
 
 
 __all__ = [
