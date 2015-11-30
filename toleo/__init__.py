@@ -1,5 +1,5 @@
 from .software import GenericSoftware, PyPISoftware, PECLSoftware, \
-    GitHubSoftware
+    GitHubSoftware, BitbucketSoftware
 
 
 __all__ = [
@@ -7,4 +7,5 @@ __all__ = [
     'PyPISoftware',
     'PECLSoftware',
     'GitHubSoftware',
+    'BitbucketSoftware',
 ]

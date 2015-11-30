@@ -100,3 +100,24 @@ class GitHubSoftware(BaseSoftware):
         soup = bs4.BeautifulSoup(result, 'lxml')
         self.versions = [Version(tag.text.replace(self._trim, ''))
                          for tag in soup.find_all('span', class_='tag-name')]
+
+
+class BitbucketSoftware(BaseSoftware):
+
+    _bitbucket = 'https://bitbucket.org'
+    _api = 'https://api.bitbucket.org/1.0'
+
+    def __init__(self, name, trim=None):
+        self.name = name
+        try:
+            self.owner, self.repo = name.split('/')
+        except ValueError:
+            raise Exception('name must be in "owner/repo" format')
+        self.url = '/'.join([self._bitbucket, self.owner, self.repo])
+        self._trim = trim or ''
+
+    async def _load(self):
+        api = '/'.join([self._api, 'repositories', self.owner, self.repo])
+        response = await aiohttp.get('/'.join([api, 'tags']))
+        data = await response.json()
+        self.versions = [Version(v) for v in data.keys()]
